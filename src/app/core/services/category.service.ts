@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { shareReplay, switchMap, mergeMap, map } from 'rxjs/operators';
 
 import { Category } from '@core/models/category.model';
 import { HttpService } from '@core/services/shared/http.service';
+import { BookService } from '@core/services/book.service';
 
 
 @Injectable({
@@ -17,10 +18,29 @@ export class CategoryService {
     categories: 'categories',
   };
 
-  constructor(private httpService: HttpService) { }
+  constructor(
+    private httpService: HttpService,
+    private bookService: BookService,
+  ) { }
 
   getCategories(): Observable<Category[]> {
-    this.categories$ = this.httpService.get<Category[]>(this.urls.categories).pipe(shareReplay(1));
+    // return this.httpService.get<Category[]>(this.urls.categories);
+
+    // mock
+    return this.httpService.get<Category[]>(this.urls.categories).pipe(
+      switchMap(categories => of(categories).pipe(
+        mergeMap(category => this.bookService.getBooks()),
+        map(books => books.map(book => book.id)),
+        map(books => categories.filter(category => books.indexOf(category.book) !== -1)),
+      )),
+    );
+  }
+
+  getCategoriesFromBook(book: number): Observable<Category[]> {
+    this.categories$ = this.getCategories().pipe(
+      map(categories => categories.filter(category => category.book === book)),
+      shareReplay(1),
+    );
     return this.categories$;
   }
 

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { shareReplay, switchMap, mergeMap, map } from 'rxjs/operators';
 
 import { Authority } from '@core/models/authority.model';
 import { HttpService } from '@core/services/shared/http.service';
+import { UserService } from '@core/services/user.service';
 
 
 @Injectable({
@@ -11,17 +12,38 @@ import { HttpService } from '@core/services/shared/http.service';
 })
 export class AuthorityService {
 
-  authority$: Observable<Authority[]>;
+  authorities$: Observable<Authority[]>;
 
   private urls = {
     authorities: 'authorities',
   };
 
-  constructor(private httpService: HttpService) { }
+  constructor(
+    private httpService: HttpService,
+    private userService: UserService,
+  ) { }
 
   getAuthorities(): Observable<Authority[]> {
-    this.authority$ = this.httpService.get<Authority[]>(this.urls.authorities).pipe(shareReplay(1));
-    return this.authority$;
+    // return this.httpService.get<Authority[]>(this.urls.authorities);
+
+    // mock
+    return this.httpService.get<Authority[]>(this.urls.authorities).pipe(
+      switchMap(authorities => of(authorities).pipe(
+        mergeMap(authority => this.userService.me()),
+        map(me => authorities.filter(authority => me.id === authority.user)),
+        map(dataset => dataset.map(data => data.book)),
+        map(dataset => authorities.filter(authority => dataset.indexOf(authority.book) !== -1)),
+      )),
+      shareReplay(1)
+    );
+  }
+
+  getAuthoritiesFromBook(book: number): Observable<Authority[]> {
+    this.authorities$ = this.getAuthorities().pipe(
+      map(authorities => authorities.filter(authority => authority.book === book)),
+      shareReplay(1),
+    );
+    return this.authorities$;
   }
 
   getAuthority(id: number): Observable<Authority> {

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { shareReplay, switchMap, mergeMap, map } from 'rxjs/operators';
 
 import { Proportion } from '@core/models/proportion.model';
 import { HttpService } from '@core/services/shared/http.service';
+import { ConsumeService } from '@core/services/consume.service';
 
 
 @Injectable({
@@ -14,10 +16,29 @@ export class ProportionService {
     proportion: 'proportion',
   };
 
-  constructor(private httpService: HttpService) { }
+  constructor(
+    private httpService: HttpService,
+    private consumeService: ConsumeService,
+  ) { }
 
   getProportions(): Observable<Proportion[]> {
-    return this.httpService.get<Proportion[]>(this.urls.proportion);
+    return this.httpService.get<Proportion[]>(this.urls.proportion).pipe(
+      switchMap(proportions => of(proportions).pipe(
+        mergeMap(proportion => this.consumeService.getConsumes()),
+        map(consumes => consumes.map(consume => consume.id)),
+        map(consumes => proportions.filter(proportion => consumes.indexOf(proportion.consume) !== -1)),
+      )),
+    );
+  }
+
+  getProportionsFromBook(book: number): Observable<Proportion[]> {
+    return this.getProportions().pipe(
+      switchMap(proportions => of(proportions).pipe(
+        mergeMap(proportion => this.consumeService.getConsumesFromBook(book)),
+        map(consumes => consumes.map(consume => consume.id)),
+        map(consumes => proportions.filter(proportion => consumes.indexOf(proportion.consume) !== -1)),
+      )),
+    );
   }
 
   getProportion(id: number): Observable<Proportion> {

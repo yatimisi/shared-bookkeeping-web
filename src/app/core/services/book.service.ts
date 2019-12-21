@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { shareReplay, switchMap, mergeMap, map } from 'rxjs/operators';
 
 import { Book } from '@core/models/book.model';
 import { HttpService } from '@core/services/shared/http.service';
+import { AuthorityService } from '@core/services/authority.service';
 
 
 @Injectable({
@@ -17,10 +18,22 @@ export class BookService {
     books: 'accountbooks',
   };
 
-  constructor(private httpService: HttpService) { }
+  constructor(
+    private httpService: HttpService,
+    private authorityService: AuthorityService,
+  ) { }
 
   getBooks(): Observable<Book[]> {
     this.books$ = this.httpService.get<Book[]>(this.urls.books).pipe(shareReplay(1));
+
+    // mock
+    this.books$ = this.books$.pipe(
+      switchMap(books => of(books).pipe(
+        mergeMap(book => this.authorityService.getAuthorities()),
+        map(authorities => authorities.map(authority => authority.book)),
+        map(authorities => books.filter(book => authorities.indexOf(book.id) !== -1)),
+      )),
+    );
     return this.books$;
   }
 

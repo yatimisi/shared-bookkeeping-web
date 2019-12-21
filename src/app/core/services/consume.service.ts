@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { shareReplay, switchMap, mergeMap, map } from 'rxjs/operators';
 
 import { Consume } from '@core/models/consume.model';
 import { HttpService } from '@core/services/shared/http.service';
+import { CategoryService } from '@core/services/category.service';
 
 
 @Injectable({
@@ -17,10 +18,34 @@ export class ConsumeService {
     consume: 'consume',
   };
 
-  constructor(private httpService: HttpService) { }
+  constructor(
+    private httpService: HttpService,
+    private categoryService: CategoryService,
+  ) { }
 
   getConsumes(): Observable<Consume[]> {
-    this.consumes$ = this.httpService.get<Consume[]>(this.urls.consume).pipe(shareReplay(1));
+    // return this.httpService.get<Consume[]>(this.urls.consume);
+
+    // mock
+    return this.httpService.get<Consume[]>(this.urls.consume).pipe(
+      switchMap(consumes => of(consumes).pipe(
+        mergeMap(consume => this.categoryService.getCategories()),
+        map(categories => categories.map(category => category.id)),
+        map(categories => consumes.filter(consume => categories.indexOf(consume.category) !== -1)),
+      )),
+    );
+  }
+
+  getConsumesFromBook(book: number): Observable<Consume[]> {
+    this.consumes$ = this.getConsumes().pipe(
+      switchMap(consumes => of(consumes).pipe(
+        mergeMap(consume => this.categoryService.getCategories()),
+        map(categories => categories.filter(category => category.book === book)),
+        map(categories => categories.map(category => category.id)),
+        map(categories => consumes.filter(consume => categories.indexOf(consume.category) !== -1)),
+      )),
+      shareReplay(1),
+    );
     return this.consumes$;
   }
 

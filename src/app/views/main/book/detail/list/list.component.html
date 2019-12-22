@@ -1,0 +1,17 @@
+<div class="content">
+  <app-table [data$]="source$" [headers]="headers" (dataChange$)="onDataChange($event);">
+    <!--Rows-->
+    <app-row *ngFor="let data of dataSet$ | async" (click)="detail(data.id)">
+      <app-cell [header]="headers['id']">{{data.id}}</app-cell>
+      <app-cell [header]="headers['name']">{{data.name}}</app-cell>
+      <app-cell [header]="headers['creator']">{{data.creator}}</app-cell>
+      <app-cell [header]="headers['consumeAt']">{{data.consumeAt}}</app-cell>
+      <app-cell [header]="headers['feature']" mobile="true">
+        <mat-icon id="detail-{{data.id}}" (click)="detail(data.id)" title="detail">arrow_forward</mat-icon>
+      </app-cell>
+    </app-row>
+
+  </app-table>
+</div>
+
+<app-add-button (click)="add()"></app-add-button>

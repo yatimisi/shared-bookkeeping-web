@@ -14,6 +14,7 @@ export class BookService {
 
   books$: Observable<Book[]>;
   nowBook$: Observable<Book>;
+  nowBook = 2;
 
   private urls = {
     books: 'accountbooks',

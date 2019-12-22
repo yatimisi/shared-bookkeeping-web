@@ -1,0 +1,26 @@
+<div class="wrapper">
+  <div class="header">
+    <app-head *ngFor="let key of objectKeys(headers)" [header]="headers[key]"></app-head>
+  </div>
+
+  <div class="body" *ngIf="(data$ | async) && status">
+    <ng-content select="app-row"></ng-content>
+    <mat-paginator [length]="length" [pageIndex]="pageIndex" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+      (page)="pageEvent($event)">
+    </mat-paginator>
+  </div>
+
+  <div class="empty" *ngIf="!status">
+    <ng-container *ngIf="status === undefined">
+      <app-row *ngFor="let i of counter(pageSize)">
+        <app-cell *ngFor="let key of objectKeys(headers)" [mobile]="key==='feature'" [header]="headers[key]">
+        </app-cell>
+      </app-row>
+    </ng-container>
+
+    <app-row *ngIf="status !== undefined">
+      <app-cell [header]="{ percentage: 100 }">無資料</app-cell>
+    </app-row>
+  </div>
+
+</div>

@@ -1,0 +1,43 @@
+.cell {
+  padding: 5px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.center-wrapper p {
+  margin-bottom: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.mobile-column-name {
+  display: none;
+}
+
+// /* -------------------------------------------------------Responsive -------------------------------------------------------*/
+
+// /* Small devices */
+
+@media (max-width: 767.98px) {
+  .cell {
+    padding: 5px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: left;
+  }
+
+  .mobile {
+    display: none;
+  }
+
+  .mobile-column-name {
+    display: inline-block;
+    min-width: 100px;
+    font-weight: 600;
+  }
+}

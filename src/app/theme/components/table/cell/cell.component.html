@@ -1,0 +1,10 @@
+<div [class]="mobile ? 'cell mobile': 'cell'">
+  <span class="mobile-column-name">
+    {{header.title}}
+  </span>
+  <div class="center-wrapper">
+    <p>
+      <ng-content></ng-content>
+    </p>
+  </div>
+</div>

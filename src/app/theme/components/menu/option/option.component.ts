@@ -31,7 +31,8 @@ export class MenuOptionComponent implements OnInit {
     this.level += 1;
   }
   title(id: number) {
-    this.bookService.nowBook$ = (id ? this.bookService.getBook(id) : undefined);
+    this.bookService.nowBook$ = (id ? this.bookService.getBook(2) : undefined);
+    this.bookService.nowBook = (id ? 2 : undefined);
     this.router.navigate([(id ? `/books/${id}` : '/dashboard')], { relativeTo: this.route });
   }
   goMore(id: number) {

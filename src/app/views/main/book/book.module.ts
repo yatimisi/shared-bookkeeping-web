@@ -6,6 +6,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { BookComponent } from './book.component';
 import { BookRoutingModule } from './book-routing.module';
 
+import { BookDetailListComponent } from './detail/list/list.component';
+
 
 @NgModule({
   imports: [
@@ -15,6 +17,9 @@ import { BookRoutingModule } from './book-routing.module';
     ReactiveFormsModule,
     FormsModule,
   ],
-  declarations: [BookComponent],
+  declarations: [
+    BookComponent,
+    BookDetailListComponent,
+  ],
 })
 export class BookModule { }

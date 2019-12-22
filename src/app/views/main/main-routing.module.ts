@@ -10,7 +10,7 @@ const routes: Routes = [
     component: MainComponent,
     children: [
       {
-        path: 'books/:id',
+        path: 'books',
         loadChildren: () => import('@views/main/book/book.module')
           .then(module => module.BookModule),
       },

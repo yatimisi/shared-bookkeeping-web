@@ -1,0 +1,23 @@
+.header {
+  display: flex;
+}
+
+.body,
+.empty {
+  margin-top: 15px;
+}
+
+.wrapper {
+  padding-bottom: 100px;
+}
+
+.inplace {
+  position: inherit;
+}
+
+/* Small devices */
+@media (max-width: 767.98px) {
+  .header {
+    display: none;
+  }
+}

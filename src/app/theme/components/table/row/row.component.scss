@@ -1,0 +1,19 @@
+div {
+  display: flex;
+  background: #fff;
+  box-shadow: 5px 5px 14px 0 rgba(189, 189, 205, 0.1);
+  margin-bottom: 20px;
+  padding: 5px;
+  transition: 0.3s;
+}
+
+div:hover, div:active {
+  background-color: #ababab;
+}
+
+@media (max-width: 767.98px) {
+  div {
+    flex-direction: column;
+    border-radius: 6px;
+  }
+}

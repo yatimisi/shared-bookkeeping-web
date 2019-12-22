@@ -18,7 +18,7 @@ import { NavbarMod } from '@core/enums/navbar.mod.enums';
 
     <mat-sidenav-container class="row body sidenav-container">
       <mat-sidenav #sidenav [mode]="mode">
-
+        <ng-content select="app-menu"></ng-content>
       </mat-sidenav>
 
       <mat-sidenav-content>

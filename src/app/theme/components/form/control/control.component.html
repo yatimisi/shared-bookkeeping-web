@@ -1,0 +1,37 @@
+<div class="form-group child px-4" [hidden]="hidden">
+  <span>{{title}}</span>
+  <ng-container [ngSwitch]="type">
+
+    <!-- Text -->
+    <input *ngSwitchCase="'text'" type="text" class="form-control" [readOnly]="readOnly" [formControl]="formControl" [value]="(value? value: formControl.value)"/>
+
+    <!-- Date -->
+    <input *ngSwitchCase="'date'" type="date" class="form-control" [readOnly]="readOnly" [formControl]="formControl" [value]="(value? value: formControl.value)"/>
+
+    <!-- Image -->
+    <ng-container *ngSwitchCase="'image'">
+      <img *ngIf="formControl.value || formControl.value === '' && previewUrl === '';else nonImage" class="mt-md-4 form-control" [src]="(previewUrl === ''? formControl.value: previewUrl)">
+      <label class="btn btn-dark" [style.visibility]="readOnly ? 'hidden' : ''">
+        <input type="file" name="image" class="form-control" accept=".jpg, .jpeg, .png" (change)="fileProgress($event)" />
+        <mat-icon>insert_photo</mat-icon>
+        照片上傳
+      </label>
+      <ng-template #nonImage>
+        <img class="mt-md-4 form-control" src="assets/images/Non-picture.png" />
+      </ng-template>
+    </ng-container>
+
+    <!-- Select -->
+    <ng-container *ngSwitchCase="'select'">
+      <select class="form-control" [attr.disabled]="readOnly ? '' : null" [formControl]="formControl" >
+        <ng-content></ng-content>
+      </select>
+    </ng-container>
+
+    <!-- textarea -->
+    <textarea *ngSwitchCase="'textarea'" class="form-control" [readOnly]="readOnly" [formControl]="formControl"></textarea>
+
+  </ng-container>
+
+  <app-form-error [form]="formControl"></app-form-error>
+</div>

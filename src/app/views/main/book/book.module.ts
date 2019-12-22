@@ -7,6 +7,7 @@ import { BookComponent } from './book.component';
 import { BookRoutingModule } from './book-routing.module';
 
 import { BookDetailListComponent } from './detail/list/list.component';
+import { BookDetailAddComponent } from './detail/add/add.component';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { BookDetailListComponent } from './detail/list/list.component';
   declarations: [
     BookComponent,
     BookDetailListComponent,
+    BookDetailAddComponent,
   ],
 })
 export class BookModule { }

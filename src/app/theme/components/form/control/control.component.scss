@@ -1,0 +1,66 @@
+input[readonly],
+select[disabled],
+textarea {
+  cursor: pointer;
+}
+
+input[type="file"] {
+  font-size: x-small;
+  display: none;
+}
+
+select {
+  min-width: 130px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg width='20' height='14' viewBox='0 0 8 14' xmlns='http://www.w3.org/2000/svg'><path d='M8 5.5q0 0.203-0.148 0.352l-3.5 3.5q-0.148 0.148-0.352 0.148t-0.352-0.148l-3.5-3.5q-0.148-0.148-0.148-0.352t0.148-0.352 0.352-0.148h7q0.203 0 0.352 0.148t0.148 0.352z' /></svg>");
+  background-repeat: no-repeat;
+  background-position-x: 100%;
+  background-position-y: 12px;
+  cursor: pointer;
+}
+
+label {
+  align-items: center;
+  display: flex;
+  margin-top: 20px;
+  width: fit-content;
+  cursor: pointer;
+  box-shadow: 1px 1px 3px 1px rgba(200, 200, 200, 0.9);
+}
+
+img {
+  box-shadow: 1px 1px 3px 1px rgba(200, 200, 200, 0.9);
+  border-radius: 10px;
+  padding: 0;
+  height: initial;
+  max-width: 300px;
+  max-height: 300px;
+}
+
+span {
+  font-size: 15px;
+  color: #fff;
+  cursor: default;
+}
+
+app-form-error {
+  --position: relative;
+  --padding: 0.75rem 1.25rem;
+  --margin-bottom: 1rem;
+  --border: 1px solid transparent;
+  --border-radius: 0.25rem;
+  --color: #721c24;
+  --background-color: #f8d7da;
+  --border-color: #f5c6cb;
+  --margin-top: 0.25rem !important;
+  --margin-bottom: 0.25rem !important;
+  --max-width: 400px;
+}
+
+@media (max-width: 767.98px) {
+  span {
+    font-size: 14px;
+  }
+}

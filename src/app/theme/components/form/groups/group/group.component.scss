@@ -1,0 +1,11 @@
+span {
+  color: #fff;
+  font-size: 21px;
+  cursor: default;
+}
+
+@media (max-width: 767.98px) {
+  span {
+    font-size: 20px;
+  }
+}

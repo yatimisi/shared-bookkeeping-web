@@ -1,0 +1,53 @@
+.container-fluid {
+  padding: 0px;
+  button {
+    line-height: 1;
+    color: #fff;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+  }
+  a {
+    color: #fff;
+    cursor: pointer;
+  }
+  .navbar-brand {
+    height: 66px;
+    cursor: pointer;
+  }
+  .navbar {
+    box-shadow: 14px 16px 6px -15px rgba(200, 200, 200, 0.9);
+    min-height: 66px;
+  }
+  .avatar {
+    border-radius: 100px;
+    height: 50px;
+    width: 50px;
+    box-shadow: 1px 1px 1px 1px rgba(200, 200, 200, 0.9);
+  }
+  .dropdown .dropdown-menu {
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background-color: #fff !important;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    a {
+      color: #212529;
+      display: flex;
+      padding-bottom: 8px;
+      padding-top: 8px;
+    }
+    a span {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
+  .btn {
+    display: contents;
+  }
+  @media (min-width: 576px) {
+    display: block !important;
+    a.btn {
+      font-size: 18px;
+    }
+  }
+}

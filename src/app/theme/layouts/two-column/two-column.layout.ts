@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { MatSidenav } from '@angular/material';
 
 import { NavbarMod } from '@core/enums/navbar.mod.enums';
 
@@ -11,7 +12,7 @@ import { NavbarMod } from '@core/enums/navbar.mod.enums';
   <div class="container">
     <div class="row header">
       <div class="col-12">
-        <app-navbar [navMod]="NavbarMod.isAuthenticated" (sidenav)="sidenav.toggle()"></app-navbar>
+        <app-navbar [navMod]="NavbarMod.isAuthenticated" (sidenav)="test()"></app-navbar>
       </div>
     </div>
 
@@ -31,9 +32,16 @@ export class TwoColumnLayoutComponent implements OnInit {
   mode = 'side';
   NavbarMod = NavbarMod;
 
-  constructor(private breakpointObserver: BreakpointObserver) {}
+  @ViewChild('sidenav', { static: false }) sidenav: MatSidenav;
+
+  constructor(private breakpointObserver: BreakpointObserver) { }
 
   ngOnInit() {
     this.mode = (this.breakpointObserver.isMatched('(max-width: 576px)') ? 'over' : 'side');
+  }
+
+  test() {
+    this.mode = (this.breakpointObserver.isMatched('(max-width: 576px)') ? 'over' : 'side');
+    this.sidenav.toggle();
   }
 }

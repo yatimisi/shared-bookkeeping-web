@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { shareReplay } from 'rxjs/operators';
 
 import { UserService } from '@core/services/user.service';
+import { BookService } from '@core/services/book.service';
 
 
 @Component({
@@ -16,6 +17,7 @@ export class WebsiteComponent implements OnInit {
 
   constructor(
     public userService: UserService,
+    public bookService: BookService,
     private router: Router,
     private route: ActivatedRoute,
   ) { }

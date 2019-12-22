@@ -3,6 +3,7 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Book } from '@core/models/book.model';
+import { BookService } from '@core/services/book.service';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class MenuOptionComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private router: Router,
     private route: ActivatedRoute,
+    private bookService: BookService,
   ) { }
 
   ngOnInit() {
@@ -29,6 +31,7 @@ export class MenuOptionComponent implements OnInit {
     this.level += 1;
   }
   title(id: number) {
+    this.bookService.nowBook$ = (id ? this.bookService.getBook(id) : undefined);
     this.router.navigate([(id ? `/books/${id}` : '/dashboard')], { relativeTo: this.route });
   }
   goMore(id: number) {

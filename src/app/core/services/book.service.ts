@@ -13,6 +13,7 @@ import { AuthorityService } from '@core/services/authority.service';
 export class BookService {
 
   books$: Observable<Book[]>;
+  nowBook$: Observable<Book>;
 
   private urls = {
     books: 'accountbooks',
@@ -38,7 +39,7 @@ export class BookService {
   }
 
   getBook(id: number): Observable<Book> {
-    return this.httpService.get<Book>(`${this.urls.books}/${id}`);
+    return this.httpService.get<Book>(`${this.urls.books}/${id}`).pipe(shareReplay(1));
   }
 
   createBook(book: Book): Observable<Book> {

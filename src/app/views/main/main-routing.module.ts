@@ -8,6 +8,15 @@ const routes: Routes = [
   {
     path: '',
     component: MainComponent,
+    children: [
+      {
+        path: 'books/:id',
+        loadChildren: () => import('@views/main/book/book.module')
+          .then(module => module.BookModule),
+      },
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: '**', redirectTo: 'dashboard', pathMatch: 'full' },
+    ]
   },
 ];
 

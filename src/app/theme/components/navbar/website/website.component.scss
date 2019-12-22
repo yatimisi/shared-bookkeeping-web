@@ -1,5 +1,8 @@
 .container-fluid {
   padding: 0px;
+  .username {
+    display: none;
+  }
   button {
     line-height: 1;
     color: #fff;
@@ -7,10 +10,20 @@
     border: 1px solid transparent;
     border-radius: 0.25rem;
   }
-
+  .slug {
+    font-size: 1.25rem;
+    border-left: 1px solid #4f4f4f;
+    padding-left: 1.25rem;
+    margin-left: 0.625rem;
+  }
   nav {
     background-color: #262626;
     z-index: 2;
+  }
+  .nav-item {
+    justify-content: center;
+    align-items: center;
+    display: flex;
   }
   a {
     color: #fff;
@@ -30,29 +43,40 @@
     width: 50px;
     box-shadow: 1px 1px 1px 1px rgba(200, 200, 200, 0.9);
   }
-  .dropdown .dropdown-menu {
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    background-color: #fff !important;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    a {
-      color: #212529;
-      display: flex;
-      padding-bottom: 8px;
+  .dropdown {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    .dropdown-menu {
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      background-color: #fff !important;
       padding-top: 8px;
-    }
-    a span {
-      margin-left: 10px;
-      margin-right: 10px;
+      padding-bottom: 8px;
+      a {
+        color: #212529;
+        display: flex;
+        padding-bottom: 8px;
+        padding-top: 8px;
+      }
+      a span {
+        margin-left: 10px;
+        margin-right: 10px;
+      }
     }
   }
   .btn {
     display: contents;
   }
+
+  @media (min-width: 450px) {
+    .username {
+      display: inline;
+    }
+  }
   @media (min-width: 576px) {
     display: block !important;
     a.btn {
-      font-size: 18px;
+      font-size: 1.25rem;
     }
   }
 }

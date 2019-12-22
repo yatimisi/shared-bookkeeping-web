@@ -7,6 +7,7 @@
         <div class="collapse navbar-collapse justify-content-start">
           <div class="nav-item">
             <button mat-icon-button (click)="switch()"><mat-icon>menu</mat-icon></button>
+            <a class="slug" (click)="conversionRouter('/')">Account Book</a>
           </div>
         </div>
 
@@ -18,7 +19,7 @@
               <!--Dropdown Button-->
               <a class="btn" id="dropdownMenuLink" data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                 aria-expanded="false" *ngIf="(userService.me$ | async) else loading">
-                <span>{{ (userService.me$ | async)?.username }}</span>
+                <span class="username">{{ (userService.me$ | async)?.username }}</span>
 
                 <!--Hav Image-->
                 <ng-container *ngIf="(userService.me$ | async)?.image; else nonImage">

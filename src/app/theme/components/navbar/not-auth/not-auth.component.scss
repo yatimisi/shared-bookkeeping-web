@@ -5,7 +5,14 @@
     color: #fff;
     cursor: pointer;
   }
-
+  .navbar-brand {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    span {
+      margin-left: 0.625rem;
+    }
+  }
   nav {
     background-color: #262626;
     z-index: 2;

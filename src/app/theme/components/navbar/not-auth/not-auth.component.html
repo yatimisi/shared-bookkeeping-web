@@ -6,11 +6,11 @@
         <!--Left Logo-->
         <a class="navbar-brand" (click)="conversionRouter('/')">
           <mat-icon>create</mat-icon>
-          Account Book
+          <span>Account Book</span>
         </a>
 
         <!--Navbar Toggler-->
-        <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav" type="button"
+        <button class="navbar-toggler" [hidden]="localRoute === 'auth'" data-toggle="collapse" data-target="#navbarNav" type="button"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>

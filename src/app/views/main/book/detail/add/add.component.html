@@ -2,6 +2,7 @@
   <app-groups>
     <app-group md="7">
       <app-control ngDefaultControl type="text" [readOnly]="sending" title="name" [formControl]="form.controls['name']"></app-control>
+      <app-control ngDefaultControl type="text" [readOnly]="sending" title="消費金額" [formControl]="form.controls['fee']"></app-control>
       <app-control ngDefaultControl type="textarea" [readOnly]="sending" title="備註" [formControl]="form.controls['note']"></app-control>
       <app-control ngDefaultControl type="select" [readOnly]="sending" title="付款人" [formControl]="form.controls['creator']">
         <option value="">請選擇</option>
@@ -16,6 +17,17 @@
         </ng-container>
       </app-control>
       <app-control ngDefaultControl type="date" [readOnly]="sending" title="消費日" [formControl]="form.controls['consumeAt']"></app-control>
+
+    </app-group>
+    <app-group md="5">
+      <app-other ngDefaultControl readOnly="true" title="" [formControl]="form.controls['category']">
+        <div *ngFor="let user of users$ | async; let i=index" class="col-md-2">
+          <label style="justify-content: center; align-items: center; display: flex;">
+            <input class="form-control" type="checkbox" name="proportions" style="size: 12px;" [value]="user.id">
+            <span style="color: #fff;">{{user.username}}</span>
+          </label>
+        </div>
+      </app-other>
     </app-group>
   </app-groups>
 

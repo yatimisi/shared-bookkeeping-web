@@ -21,11 +21,7 @@
 
   <app-groups>
     <app-group md="7" align="right">
-      <button customButton="save" type="submit" [disabled]="sending">
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" [hidden]="!sending"></span>
-        送出
-      </button>
-      <button customButton="back" type="button" [disabled]="sending" (click)="onBack()">取消</button>
+      <button customButton="back" type="button" (click)="onBack()">返回</button>
     </app-group>
   </app-groups>
 </app-form>

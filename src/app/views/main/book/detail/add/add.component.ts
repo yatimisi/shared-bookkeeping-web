@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { delay, shareReplay, map } from 'rxjs/operators';
@@ -7,10 +7,12 @@ import { delay, shareReplay, map } from 'rxjs/operators';
 import { Category } from '@core/models/category.model';
 import { User } from '@core/models/user.model';
 import { Consume } from '@core/models/consume.model';
+import { Proportion } from '@core/models/proportion.model';
 import { ConsumeService } from '@core/services/consume.service';
 import { SwalService } from '@core/services/swal.service';
 import { UserService } from '@core/services/user.service';
 import { CategoryService } from '@core/services/category.service';
+import { ProportionService } from '@core/services/proportion.service';
 
 
 @Component({
@@ -30,6 +32,7 @@ export class BookDetailAddComponent implements OnInit {
     private route: ActivatedRoute,
     private consumeService: ConsumeService,
     private categoryService: CategoryService,
+    private proportionService: ProportionService,
     private swalService: SwalService,
     private userService: UserService,
   ) { }
@@ -50,10 +53,11 @@ export class BookDetailAddComponent implements OnInit {
   buildForm(data = {} as Consume): void {
     this.form = this.formBuilder.group({
       name: [data.name, [Validators.required, Validators.maxLength(50)]],
-      note: [data.note, []],
+      note: [data.note, [Validators.required]],
       creator: [data.creator, [Validators.required]],
       category: [data.category, [Validators.required]],
       consumeAt: [data.consumeAt, [Validators.required]],
+      fee: [0, [Validators.required, Validators.min(0)]],
     });
   }
 
@@ -87,6 +91,23 @@ export class BookDetailAddComponent implements OnInit {
         delay(1000)
       ).subscribe(
         result => {
+          const proportions = document.getElementsByName('proportions');
+          const array = [];
+
+          proportions.forEach(proportion => {
+            if (proportion.checked) {
+              array.push(proportion);
+            }
+          });
+
+          array.forEach(data => this.proportionService.createProportion({
+            username: data.value,
+            // tslint:disable-next-line: no-string-literal
+            fee: this.form.controls['fee'].value / array.length,
+            consume: result.id,
+            payment: 0,
+          } as Proportion).subscribe());
+
           this.swalService.alert('新增完成', 'success');
           this.router.navigate(['../', result.id, 'detail'], { relativeTo: this.route });
         },

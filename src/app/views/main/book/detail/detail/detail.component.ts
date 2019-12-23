@@ -6,11 +6,13 @@ import { delay, shareReplay, map } from 'rxjs/operators';
 
 import { Category } from '@core/models/category.model';
 import { User } from '@core/models/user.model';
+import { Proportion } from '@core/models/proportion.model';
 import { Consume } from '@core/models/consume.model';
 import { ConsumeService } from '@core/services/consume.service';
 import { SwalService } from '@core/services/swal.service';
 import { UserService } from '@core/services/user.service';
 import { CategoryService } from '@core/services/category.service';
+import { ProportionService } from '@core/services/proportion.service';
 
 
 @Component({
@@ -20,9 +22,10 @@ import { CategoryService } from '@core/services/category.service';
 export class BookDetailDetailComponent implements OnInit {
 
   form: FormGroup;
-  sending = false;
+  sending = true;
   users$: Observable<User[]>;
   categories$: Observable<Category[]>;
+  proportions$: Observable<Proportion[]>;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -30,6 +33,7 @@ export class BookDetailDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private consumeService: ConsumeService,
     private categoryService: CategoryService,
+    private proportionService: ProportionService,
     private swalService: SwalService,
     private userService: UserService,
   ) { }

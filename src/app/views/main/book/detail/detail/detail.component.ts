@@ -14,10 +14,10 @@ import { CategoryService } from '@core/services/category.service';
 
 
 @Component({
-  selector: 'app-add',
-  templateUrl: './add.component.html',
+  selector: 'app-detail',
+  templateUrl: './detail.component.html',
 })
-export class BookDetailAddComponent implements OnInit {
+export class BookDetailDetailComponent implements OnInit {
 
   form: FormGroup;
   sending = false;
@@ -45,6 +45,11 @@ export class BookDetailAddComponent implements OnInit {
       map(users => users.sort((x, y) => x.id < y.id ? -1 : 1)),
       shareReplay(1),
     );
+
+    this.consumeService.getConsume(+(this.route.snapshot.paramMap.get('consumeId')))
+    .subscribe(result => {
+      this.buildForm(result);
+    });
   }
 
   buildForm(data = {} as Consume): void {
@@ -83,15 +88,15 @@ export class BookDetailAddComponent implements OnInit {
         return;
       }
 
-      this.consumeService.createConsume(this.form.value).pipe(
+      this.consumeService.partialUpdateConsume(+(this.route.snapshot.paramMap.get('consumeId')), this.form.value).pipe(
         delay(1000)
       ).subscribe(
         result => {
-          this.swalService.alert('新增完成', 'success');
+          this.swalService.alert('修改完成', 'success');
           this.router.navigate(['../', result.id, 'detail'], { relativeTo: this.route });
         },
         err => {
-          this.swalService.alert('新增失敗', 'error', err);
+          this.swalService.alert('修改失敗', 'error', err);
           this.sending = false;
         },
         () => { }

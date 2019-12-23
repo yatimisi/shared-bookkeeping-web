@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { BookComponent } from './book.component';
 import { BookDetailListComponent } from './detail/list/list.component';
 import { BookDetailAddComponent } from './detail/add/add.component';
+import { BookDetailDetailComponent } from './detail/detail/detail.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
         children: [
           { path: 'list', component: BookDetailListComponent },
           { path: 'add', component: BookDetailAddComponent },
+          { path: ':consumeId/detail', component: BookDetailDetailComponent },
           { path: '', redirectTo: 'list', pathMatch: 'full' },
         ],
       },

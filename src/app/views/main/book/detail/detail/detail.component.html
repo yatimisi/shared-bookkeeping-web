@@ -1,0 +1,31 @@
+<app-form [formGroup]="form" (event)="onSubmin()" title="記帳資訊">
+  <app-groups>
+    <app-group md="7">
+      <app-control ngDefaultControl type="text" [readOnly]="sending" title="name" [formControl]="form.controls['name']"></app-control>
+      <app-control ngDefaultControl type="textarea" [readOnly]="sending" title="備註" [formControl]="form.controls['note']"></app-control>
+      <app-control ngDefaultControl type="select" [readOnly]="sending" title="付款人" [formControl]="form.controls['creator']">
+        <option value="">請選擇</option>
+        <ng-container *ngFor="let user of users$ | async">
+          <option value="{{ user.id }}" [selected]="user.id === form.controls['creator'].value">{{ user.username}}</option>
+        </ng-container>
+      </app-control>
+
+      <app-control ngDefaultControl type="select" [readOnly]="sending" title="分類" [formControl]="form.controls['category']">
+        <ng-container *ngFor="let category of categories$ | async">
+          <option value="{{ category.id }}" [selected]="category.id === form.controls['category'].value">{{ category.name}}</option>
+        </ng-container>
+      </app-control>
+      <app-control ngDefaultControl type="date" [readOnly]="sending" title="消費日" [formControl]="form.controls['consumeAt']"></app-control>
+    </app-group>
+  </app-groups>
+
+  <app-groups>
+    <app-group md="7" align="right">
+      <button customButton="save" type="submit" [disabled]="sending">
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" [hidden]="!sending"></span>
+        送出
+      </button>
+      <button customButton="back" type="button" [disabled]="sending" (click)="onBack()">取消</button>
+    </app-group>
+  </app-groups>
+</app-form>
